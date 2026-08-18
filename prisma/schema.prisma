@@ -1,0 +1,132 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Category {
+  id        String         @id @default(cuid())
+  name      String
+  slug      String         @unique
+  imageUrl  String?
+  parentId  String?
+  parent    Category?      @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children  Category[]     @relation("CategoryHierarchy")
+  products  Product[]
+  tiles     HomepageTile[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  slug         String         @unique
+  description  String
+  affiliateUrl String
+  videoUrl     String?
+  videoUrl2    String?
+  videoUrl3    String?
+  badge        String?
+  isNewDrop    Boolean        @default(false)
+  isFeatured   Boolean        @default(false)
+  categoryId   String
+  category     Category       @relation(fields: [categoryId], references: [id])
+  images       ProductImage[]
+  tiles        HomepageTile[]
+  clicks       ProductClick[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([categoryId])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  order     Int     @default(0)
+
+  @@index([productId])
+}
+
+model HomepageTile {
+  id         String    @id @default(cuid())
+  section    String
+  type       String
+  order      Int
+  productId  String?
+  product    Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([section, order])
+}
+
+model HeroImage {
+  id         String           @id @default(cuid())
+  url        String
+  order      Int              @default(0)
+  settingsId Int              @default(1)
+  settings   HomepageSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+
+  @@index([settingsId])
+}
+
+model HomepageSettings {
+  id               Int         @id @default(1)
+  heroImageUrl     String?     // Keeping for backwards compatibility temporarily
+  heroImages       HeroImage[]
+  heroTitle        String
+  heroSubtitle     String?
+  heroCtaText      String?
+  heroCtaLink      String?
+  heroFontFamily   String      @default("font-inter")
+  updatedAt        DateTime    @updatedAt
+}
+
+model SiteSettings {
+  id               Int      @id @default(1)
+  ga4MeasurementId String?
+  aboutContent     String?
+  footerDisclaimer String   @default("As an Amazon Associate, we earn from qualifying purchases.")
+  updatedAt        DateTime @updatedAt
+}
+
+model PageView {
+  id    String @id @default(cuid())
+  path  String
+  date  String // YYYY-MM-DD
+  count Int    @default(1)
+
+  @@unique([path, date])
+}
+
+model ProductClick {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  date      String  // YYYY-MM-DD
+  count     Int     @default(1)
+
+  @@unique([productId, date])
+  @@index([productId])
+}
+
+model AdminUser {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  passwordHash        String
+  otpCode             String?
+  otpExpiresAt        DateTime?
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}

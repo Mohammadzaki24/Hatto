@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HATTO</title>
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#F4F4F4',
+                        charcoal: '#111111',
+                        accent: '#0047FF',
+                        cream: '#F5F0E8',
+                    },
+                    borderRadius: {
+                        card: '20px',
+                        pill: '9999px',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F4F4F4;
+            color: #111111;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+        .bg-muted {
+            background-color: #E5E5E5;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen flex-col">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 w-full border-b border-black/5 bg-white/70 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_1px_3px_rgba(0,0,0,0.05)] text-black">
+        <div class="w-full flex h-16 items-center px-4 md:px-8">
+            <a href="#" class="mr-auto flex items-center">
+                <span class="font-display text-2xl font-bold tracking-tight">HATTO</span>
+            </a>
+            <nav class="flex items-center gap-1">
+                <div class="hidden md:flex items-center">
+                    <button class="text-sm font-medium transition-colors hover:text-accent px-4 py-2">Categories</button>
+                    <div class="ml-6 pl-6 border-l border-black/10 flex items-center gap-3">
+                        <a href="#" class="text-sm font-medium transition-colors hover:text-accent">About</a>
+                        <!-- Theme toggle mock -->
+                        <button class="p-2 border rounded-md border-black/10 hover:bg-black/5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <div class="flex flex-col gap-12 md:gap-16 pb-12 md:pb-16">
+            <!-- Hero Section -->
+            <section class="relative h-[60vh] md:h-[70vh] min-h-[400px] md:min-h-[500px] w-full bg-muted">
+                <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&q=80&w=2000" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover object-center" />
+                <div class="absolute inset-0 bg-black/30"></div> <!-- Mock Overlay for text readability -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="container mx-auto px-4 text-center text-white">
+                        <h1 class="font-display text-3xl sm:text-5xl md:text-7xl font-bold uppercase tracking-tight">
+                            DISCOVER THE EXCEPTIONAL
+                        </h1>
+                        <p class="mx-auto mt-4 md:mt-6 max-w-2xl text-base md:text-lg text-white/90 sm:text-xl px-4">
+                            Handpicked essentials for the modern lifestyle.
+                        </p>
+                        <div class="mt-8 md:mt-10">
+                            <a href="#new-drops" class="inline-flex items-center justify-center h-11 px-8 py-2 rounded-md bg-[#FFFFFF] text-black hover:bg-[#FFFFFF]/90 transition-colors font-medium">
+                                Shop New Drops
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- New Drops Section -->
+            <section id="new-drops" class="container mx-auto px-4 md:px-8">
+                <div class="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 sm:gap-0">
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight">New Drops</h2>
+                    <a href="#" class="text-sm font-medium hover:underline self-start sm:self-auto">
+                        View All →
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <!-- Product 1 -->
+                    <a href="#" class="group block">
+                        <div class="h-full overflow-hidden border-transparent bg-transparent shadow-none transition-all hover:bg-background rounded-card p-2 -mx-2">
+                            <div class="relative aspect-square overflow-hidden rounded-card bg-muted mb-4">
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=600" alt="Product" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                                <div class="absolute left-3 top-3 z-10">
+                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-black text-white hover:bg-black/90">
+                                        NEW
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-1 text-black">
+                                <p class="text-xs font-medium uppercase text-black/60">
+                                    CLOTHING
+                                </p>
+                                <h3 class="mt-1 font-display text-lg font-bold leading-tight">
+                                    Essential Cotton T-Shirt
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 2 -->
+                    <a href="#" class="group block">
+                        <div class="h-full overflow-hidden border-transparent bg-transparent shadow-none transition-all hover:bg-background rounded-card p-2 -mx-2">
+                            <div class="relative aspect-square overflow-hidden rounded-card bg-muted mb-4">
+                                <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&q=80&w=600" alt="Product" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                            </div>
+                            <div class="px-1 text-black">
+                                <p class="text-xs font-medium uppercase text-black/60">
+                                    ACCESSORIES
+                                </p>
+                                <h3 class="mt-1 font-display text-lg font-bold leading-tight">
+                                    Minimalist Watch
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 3 -->
+                    <a href="#" class="group block">
+                        <div class="h-full overflow-hidden border-transparent bg-transparent shadow-none transition-all hover:bg-background rounded-card p-2 -mx-2">
+                            <div class="relative aspect-square overflow-hidden rounded-card bg-muted mb-4">
+                                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=600" alt="Product" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                                <div class="absolute left-3 top-3 z-10">
+                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-black text-white hover:bg-black/90">
+                                        HOT
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-1 text-black">
+                                <p class="text-xs font-medium uppercase text-black/60">
+                                    FOOTWEAR
+                                </p>
+                                <h3 class="mt-1 font-display text-lg font-bold leading-tight">
+                                    Urban Sneakers
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 4 -->
+                    <a href="#" class="group block">
+                        <div class="h-full overflow-hidden border-transparent bg-transparent shadow-none transition-all hover:bg-background rounded-card p-2 -mx-2">
+                            <div class="relative aspect-square overflow-hidden rounded-card bg-muted mb-4">
+                                <img src="https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?auto=format&fit=crop&q=80&w=600" alt="Product" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                            </div>
+                            <div class="px-1 text-black">
+                                <p class="text-xs font-medium uppercase text-black/60">
+                                    BAGS
+                                </p>
+                                <h3 class="mt-1 font-display text-lg font-bold leading-tight">
+                                    Everyday Backpack
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Shop by Category Section -->
+            <section class="container mx-auto px-4 md:px-8">
+                <h2 class="mb-6 md:mb-8 font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight">Shop by Category</h2>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <!-- Category 1 -->
+                    <a href="#" class="group relative block aspect-[4/3] overflow-hidden rounded-card">
+                        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=800" alt="Clothing" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                        <div class="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <h3 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white tracking-widest">
+                                CLOTHING
+                            </h3>
+                        </div>
+                    </a>
+
+                    <!-- Category 2 -->
+                    <a href="#" class="group relative block aspect-[4/3] overflow-hidden rounded-card">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=800" alt="Footwear" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                        <div class="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <h3 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white tracking-widest">
+                                FOOTWEAR
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-black/5 bg-cream py-8">
+        <div class="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-charcoal/70">
+                © 2026 HATTO. All rights reserved.
+            </p>
+            <p class="text-xs text-charcoal/50 max-w-md text-center md:text-right">
+                As an Amazon Associate, we earn from qualifying purchases.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

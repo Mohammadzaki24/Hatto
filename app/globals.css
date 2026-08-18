@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+@theme {
+  --color-background: #F4F4F4;
+  --color-charcoal: #111111;
+  --color-accent: #0047FF;
+  --color-cream: #F5F0E8;
+
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+
+  --font-display: var(--font-syne);
+  --font-body: var(--font-inter);
+  
+  --font-inter: var(--font-inter);
+  --font-syne: var(--font-syne);
+  --font-playfair: var(--font-playfair);
+  --font-fraunces: var(--font-fraunces);
+  --font-oswald: var(--font-oswald);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme */
+html.dark body {
+  background-color: #0A0A0A;
+  color: #E5E5E5;
+}
+
+/* Dark theme overrides for common elements */
+html.dark .bg-white {
+  background-color: #1A1A1A;
+}
+
+html.dark .border {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .text-muted-foreground {
+  color: #999;
+}
+
+html.dark .bg-muted {
+  background-color: #1A1A1A;
+}
