@@ -5,8 +5,9 @@ import { verifySession } from "./lib/auth"
 export async function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get("admin_session")?.value
   
-  // Protect all /admin routes except /admin/login
-  if (request.nextUrl.pathname.startsWith("/admin") && !request.nextUrl.pathname.startsWith("/admin/login")) {
+  // Protect all /admin routes except /admin/login and /admin/setup
+  const pathname = request.nextUrl.pathname;
+  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login") && !pathname.startsWith("/admin/setup")) {
     if (!sessionCookie) {
       return NextResponse.redirect(new URL("/admin/login", request.url))
     }
