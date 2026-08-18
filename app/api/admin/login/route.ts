@@ -17,21 +17,6 @@ export async function POST(request: Request) {
       return authError
     }
 
-    // Dummy credentials bypass
-    if (email === "admin@admin.com") {
-      if (!otp) {
-        if (password === "admin123") {
-          return NextResponse.json({ success: true, requireOtp: true })
-        }
-        return authError
-      }
-      if (otp === "123456") {
-        await createSession()
-        return NextResponse.json({ success: true })
-      }
-      return NextResponse.json({ error: "Incorrect OTP" }, { status: 400 })
-    }
-
     const admin = await db.adminUser.findUnique({
       where: { email }
     })
