@@ -78,10 +78,20 @@ export async function saveHeroSettings(formData: FormData) {
   // Then update orders for existing
   for (const img of existingImages) {
     if (!img.id.startsWith("new-")) {
-      await db.heroImage.update({
-        where: { id: img.id },
-        data: { order: img.order }
-      })
+      if (img.id === "legacy") {
+        await db.heroImage.create({
+          data: {
+            url: img.url,
+            order: img.order,
+            settingsId
+          }
+        })
+      } else {
+        await db.heroImage.update({
+          where: { id: img.id },
+          data: { order: img.order }
+        })
+      }
     }
   }
 
