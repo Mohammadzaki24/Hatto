@@ -17,21 +17,17 @@ export async function saveHeroSettings(formData: FormData) {
   const imageFiles = formData.getAll("imageFiles") as File[]
   const uploadedImageUrls: string[] = []
 
-  const uploadDir = path.join(process.cwd(), "public", "uploads")
-  try {
-    await fs.access(uploadDir)
-  } catch {
-    await fs.mkdir(uploadDir, { recursive: true })
-  }
-
   for (const file of imageFiles) {
     if (file && file.size > 0) {
       const bytes = await file.arrayBuffer()
       const buffer = Buffer.from(bytes)
-      const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`
-      const filePath = path.join(uploadDir, fileName)
-      await fs.writeFile(filePath, buffer)
-      uploadedImageUrls.push(`/uploads/${fileName}`)
+      
+      // Convert to base64 data URI to support Vercel serverless without external storage
+      const mimeType = file.type || "image/jpeg"
+      const base64 = buffer.toString("base64")
+      const dataUri = `data:${mimeType};base64,${base64}`
+      
+      uploadedImageUrls.push(dataUri)
     }
   }
 

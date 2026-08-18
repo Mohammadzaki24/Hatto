@@ -17,19 +17,14 @@ export async function saveCategory(formData: FormData) {
   const imageFile = formData.get("imageFile") as File | null
 
   if (imageFile && imageFile.size > 0) {
-    const uploadDir = path.join(process.cwd(), "public", "uploads")
-    try {
-      await fs.access(uploadDir)
-    } catch {
-      await fs.mkdir(uploadDir, { recursive: true })
-    }
-
     const bytes = await imageFile.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    const fileName = `${Date.now()}-${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "")}`
-    const filePath = path.join(uploadDir, fileName)
-    await fs.writeFile(filePath, buffer)
-    imageUrl = `/uploads/${fileName}`
+    
+    // Convert to base64 data URI for Vercel
+    const mimeType = imageFile.type || "image/jpeg"
+    const base64 = buffer.toString("base64")
+    
+    imageUrl = `data:${mimeType};base64,${base64}`
   }
 
   const data = {

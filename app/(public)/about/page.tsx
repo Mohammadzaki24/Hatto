@@ -12,7 +12,7 @@ export default async function AboutPage() {
         
         {settings?.aboutContent ? (
           <div 
-            className="prose prose-neutral dark:prose-invert max-w-none prose-lg text-black/80 dark:text-white/80"
+            className="prose max-w-none text-black/80 dark:text-white/80"
             dangerouslySetInnerHTML={{ __html: settings.aboutContent }}
           />
         ) : (

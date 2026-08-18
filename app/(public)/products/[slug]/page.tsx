@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </h1>
 
             <div 
-              className="prose prose-neutral dark:prose-invert mt-6 max-w-none text-black/80 dark:text-white/80"
+              className="prose max-w-none text-base text-black/80 dark:text-white/80"
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
 

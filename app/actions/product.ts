@@ -18,8 +18,6 @@ export async function saveProduct(formData: FormData) {
   const badge = formData.get("badge") as string | null
   const categoryId = formData.get("categoryId") as string
 
-  const uploadDir = path.join(process.cwd(), "public", "uploads")
-  
   // Prepare images array
   const finalImages: { url: string; order: number }[] = []
 
@@ -28,19 +26,15 @@ export async function saveProduct(formData: FormData) {
     const existingUrl = formData.get(`existingImageUrl${i}`) as string | null
 
     if (file && file.size > 0) {
-      try {
-        await fs.access(uploadDir)
-      } catch {
-        await fs.mkdir(uploadDir, { recursive: true })
-      }
-
       const bytes = await file.arrayBuffer()
       const buffer = Buffer.from(bytes)
-      const fileName = `${Date.now()}-${i}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`
-      const filePath = path.join(uploadDir, fileName)
       
-      await fs.writeFile(filePath, buffer)
-      finalImages.push({ url: `/uploads/${fileName}`, order: i })
+      // Convert to base64 data URI for Vercel
+      const mimeType = file.type || "image/jpeg"
+      const base64 = buffer.toString("base64")
+      const dataUri = `data:${mimeType};base64,${base64}`
+      
+      finalImages.push({ url: dataUri, order: i })
     } else if (existingUrl) {
       finalImages.push({ url: existingUrl, order: i })
     }

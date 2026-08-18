@@ -48,3 +48,19 @@ html.dark .text-muted-foreground {
 html.dark .bg-muted {
   background-color: #1A1A1A;
 }
+
+/* Rich text (Tiptap) styles */
+.prose {
+  line-height: 1.6;
+}
+.prose p { margin-top: 1em; margin-bottom: 1em; }
+.prose strong, .prose b { font-weight: 700; color: inherit; }
+.prose em, .prose i { font-style: italic; }
+.prose h1, .prose h2, .prose h3, .prose h4 { font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; line-height: 1.2; font-family: var(--font-display); }
+.prose h1 { font-size: 2em; }
+.prose h2 { font-size: 1.5em; }
+.prose h3 { font-size: 1.25em; }
+.prose ul { list-style-type: disc; padding-left: 1.5em; margin-top: 1em; margin-bottom: 1em; }
+.prose ol { list-style-type: decimal; padding-left: 1.5em; margin-top: 1em; margin-bottom: 1em; }
+.prose li { margin-top: 0.25em; margin-bottom: 0.25em; }
+.prose a { color: var(--color-accent); text-decoration: underline; }
