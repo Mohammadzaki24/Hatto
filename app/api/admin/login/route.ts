@@ -6,7 +6,8 @@ import bcrypt from "bcryptjs"
 
 export async function POST(request: Request) {
   try {
-    const { email, password, otp } = await request.json()
+    let { email, password, otp } = await request.json()
+    email = (email || "").trim().toLowerCase()
 
     const authError = NextResponse.json(
       { error: "Invalid credentials" },
