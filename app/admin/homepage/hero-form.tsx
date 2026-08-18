@@ -6,6 +6,51 @@ import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
 import Image from "next/image"
 
+// Helper to compress image before uploading
+const compressImage = async (file: File): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 1920;
+        const MAX_HEIGHT = 1080;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+          } else {
+            resolve(file); // fallback
+          }
+        }, 'image/jpeg', 0.8);
+      };
+    };
+    reader.onerror = (error) => reject(error);
+  });
+};
+
 interface HeroFormProps {
   settings: {
     heroTitle: string
@@ -27,15 +72,20 @@ export function HeroForm({ settings }: HeroFormProps) {
   const [images, setImages] = useState<{ id: string; url: string; order: number; file?: File }[]>(initialImages)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files && files.length > 0) {
-      const newImages = Array.from(files).map((file, idx) => ({
-        id: `new-${Date.now()}-${idx}`,
-        url: URL.createObjectURL(file),
-        order: images.length + idx,
-        file
-      }))
+      const newImages = await Promise.all(
+        Array.from(files).map(async (file, idx) => {
+          const compressedFile = await compressImage(file)
+          return {
+            id: `new-${Date.now()}-${idx}`,
+            url: URL.createObjectURL(compressedFile),
+            order: images.length + idx,
+            file: compressedFile
+          }
+        })
+      )
       setImages([...images, ...newImages])
     }
   }
@@ -64,7 +114,12 @@ export function HeroForm({ settings }: HeroFormProps) {
       }))
       formData.set("existingImages", JSON.stringify(existingImagesToKeep))
 
-      await saveHeroSettings(formData)
+      const result = await saveHeroSettings(formData)
+      if (result && result.error) {
+        alert(result.error)
+      } else {
+        alert("Hero settings saved successfully!")
+      }
     } finally {
       setIsSubmitting(false)
     }

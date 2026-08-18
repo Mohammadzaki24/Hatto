@@ -95,20 +95,26 @@ export async function saveHeroSettings(formData: FormData) {
     }
   }
 
-  // Finally create new images
-  if (uploadedImageUrls.length > 0) {
-    let maxOrder = existingImages.length
-    await db.heroImage.createMany({
-      data: uploadedImageUrls.map((url, idx) => ({
-        url,
-        order: maxOrder + idx,
-        settingsId
-      }))
-    })
-  }
+  try {
+    // Finally create new images
+    if (uploadedImageUrls.length > 0) {
+      let maxOrder = existingImages.length
+      await db.heroImage.createMany({
+        data: uploadedImageUrls.map((url, idx) => ({
+          url,
+          order: maxOrder + idx,
+          settingsId
+        }))
+      })
+    }
 
-  revalidatePath("/")
-  revalidatePath("/admin/homepage")
+    revalidatePath("/")
+    revalidatePath("/admin/homepage")
+    return { success: true }
+  } catch (error: any) {
+    console.error("Failed to save hero settings:", error)
+    return { success: false, error: error.message || "Failed to save settings. Image might be too large." }
+  }
 }
 
 export async function saveTiles(section: string, tiles: any[]) {
